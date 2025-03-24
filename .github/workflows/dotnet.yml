@@ -1,0 +1,37 @@
+name: Appium SpecFlow Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      appium:
+        image: appium/appium
+        options: --publish 4723:4723
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.x'  # Adjust based on your version
+
+      - name: Install Dependencies
+        run: |
+          dotnet restore AppiumSpecFlowProject1/AppiumSpecFlowProject1.sln
+          dotnet tool install --global SpecFlow.Tools.MsBuild.Generation
+
+      - name: Run Tests
+        run: |
+          dotnet build AppiumSpecFlowProject1/AppiumSpecFlowProject1.sln
+          dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "TestCategory=Appium"
