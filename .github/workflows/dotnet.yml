@@ -34,15 +34,11 @@ jobs:
         with:
           dotnet-version: '7.0.x'  # Adjust based on your project
 
-      - name: List files
-        run: ls -la
-
       - name: Install Dependencies
         run: |
-          dotnet restore AppiumSpecFlowProject1.sln  # Update path if needed
-          dotnet tool install --global SpecFlow.Tools.MsBuild.Generation
+          dotnet restore AppiumSpecFlowProject1.sln  # Ensure correct path
 
       - name: Run Tests
         run: |
-          dotnet build AppiumSpecFlowProject1.sln  # Update path if needed
+          dotnet build AppiumSpecFlowProject1.sln  # Ensure correct path
           dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "TestCategory=Appium"
