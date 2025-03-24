@@ -1,8 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
@@ -20,21 +18,23 @@ namespace AppiumSpecFlowProject1.Utilities
             this._appiumLocalService = appiumLocalService;
             _androidDriver = androidDriver;
         }
+
         public AndroidDriver InitializeAndroidNativeApp()
         {
-            //var appPath = apppath;
-            //var appPath = "C:\\Users\\sakum\\Downloads\\ApiDemos-debug.apk";
             var appPath = "C:\\Users\\sakum\\Downloads\\android.wdio.native.app.v1.0.8.apk";
             var serverUri = new Uri(Environment.GetEnvironmentVariable("APPIUM_HOST") ?? "http://127.0.0.1:4723");
+
             var driverOptions = new AppiumOptions()
             {
                 AutomationName = AutomationName.AndroidUIAutomator2,
                 PlatformName = "Android",
-                DeviceName = "5a2ec9e3",
-
+                DeviceName = Environment.GetEnvironmentVariable("ANDROID_DEVICE") ?? "emulator-5554",
             };
-            driverOptions.AddAdditionalAppiumOption("Application", appPath);
+
+            driverOptions.AddAdditionalAppiumOption("app", appPath);
             driverOptions.AddAdditionalAppiumOption("noReset", true);
+            driverOptions.AddAdditionalAppiumOption("headless", true);  // Enable headless mode
+            driverOptions.AddAdditionalAppiumOption("disableWindowAnimation", true);  // Disable animations for faster execution
 
             AndroidDriver androidDriver = new AndroidDriver(serverUri, driverOptions, TimeSpan.FromSeconds(180));
             return androidDriver;
@@ -44,49 +44,67 @@ namespace AppiumSpecFlowProject1.Utilities
         {
             var appPath = "C:\\Users\\sakum\\Downloads\\ApiDemos-debug.apk";
             var serverUri = new Uri(Environment.GetEnvironmentVariable("APPIUM_HOST") ?? "http://127.0.0.1:4723");
+
             var driverOptions = new AppiumOptions()
             {
                 AutomationName = AutomationName.AndroidUIAutomator2,
                 PlatformName = "Android",
-                DeviceName = "5a2ec9e3",
-
+                DeviceName = Environment.GetEnvironmentVariable("ANDROID_DEVICE") ?? "emulator-5554",
             };
-            driverOptions.AddAdditionalAppiumOption("Application", appPath);
+
+            driverOptions.AddAdditionalAppiumOption("app", appPath);
             driverOptions.AddAdditionalAppiumOption("noReset", true);
+            driverOptions.AddAdditionalAppiumOption("headless", true);  // Enable headless mode
+            driverOptions.AddAdditionalAppiumOption("disableWindowAnimation", true);  // Disable animations for faster execution
 
             AndroidDriver androidDriver = new AndroidDriver(serverUri, driverOptions, TimeSpan.FromSeconds(180));
 
-            List<string> AllContexts = new List<string>();
-            foreach (var context in androidDriver.Contexts)
+            List<string> allContexts = new List<string>(androidDriver.Contexts);
+            foreach (var context in allContexts)
             {
                 Console.WriteLine(context);
             }
-            var driv = androidDriver.Contexts.First(x => x.Contains("WEBVIEW_io.appium.android.apis"));
-            androidDriver.Context = driv;
+
+            var webviewContext = allContexts.FirstOrDefault(x => x.Contains("WEBVIEW"));
+            if (webviewContext != null)
+            {
+                androidDriver.Context = webviewContext;
+            }
+            else
+            {
+                throw new Exception("No WebView context found!");
+            }
 
             return androidDriver;
         }
+
         public AppiumLocalService StartAppiumLocalService()
         {
-            _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            if(!_appiumLocalService.IsRunning)
+            if (_appiumLocalService == null || !_appiumLocalService.IsRunning)
             {
+                _appiumLocalService = new AppiumServiceBuilder().UsingAnyFreePort().Build();
                 _appiumLocalService.Start();
             }
             return _appiumLocalService;
         }
+
         public AppiumLocalService StartAppiumLocalService(int portNumber)
         {
-            _appiumLocalService = new AppiumServiceBuilder().UsingPort(portNumber).Build();
-            if (!_appiumLocalService.IsRunning)
+            if (_appiumLocalService == null || !_appiumLocalService.IsRunning)
             {
+                _appiumLocalService = new AppiumServiceBuilder().UsingPort(portNumber).Build();
                 _appiumLocalService.Start();
             }
             return _appiumLocalService;
         }
+
         public void CloseAppiumServer()
         {
-            _appiumLocalService.Dispose();
+            if (_appiumLocalService != null && _appiumLocalService.IsRunning)
+            {
+                _appiumLocalService.Dispose();
+                _appiumLocalService = null;
+            }
         }
     }
 }
