@@ -21,13 +21,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install libssl
-        run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Install OpenSSL 1.0
+        run: sudo apt-get install libssl1.0-dev
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'  # Adjust based on your version
+
+      - name: List files
+        run: ls -la AppiumSpecFlowProject1
 
       - name: Install Dependencies
         run: |
