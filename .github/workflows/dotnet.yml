@@ -20,6 +20,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Debug File Structure
+        run: ls -R
 
       - name: Install libssl
         run: sudo apt-get update && sudo apt-get install -y libssl-dev
@@ -27,17 +32,17 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'  # Adjust based on your version
+          dotnet-version: '7.0.x'  # Adjust based on your project
 
       - name: List files
-        run: ls -la AppiumSpecFlowProject1
+        run: ls -la
 
       - name: Install Dependencies
         run: |
-          dotnet restore AppiumSpecFlowProject1/AppiumSpecFlowProject1.sln
+          dotnet restore AppiumSpecFlowProject1.sln  # Update path if needed
           dotnet tool install --global SpecFlow.Tools.MsBuild.Generation
 
       - name: Run Tests
         run: |
-          dotnet build AppiumSpecFlowProject1/AppiumSpecFlowProject1.sln
+          dotnet build AppiumSpecFlowProject1.sln  # Update path if needed
           dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "TestCategory=Appium"
