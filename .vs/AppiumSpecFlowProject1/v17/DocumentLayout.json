@@ -1,0 +1,131 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|c:\\users\\sakum\\downloads\\appiumspecflowproject1 (3)\\appiumspecflowproject1\\appiumspecflowproject1\\pages\\tap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|solutionrelative:appiumspecflowproject1\\pages\\tap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|c:\\users\\sakum\\downloads\\appiumspecflowproject1 (3)\\appiumspecflowproject1\\appiumspecflowproject1\\pages\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|solutionrelative:appiumspecflowproject1\\pages\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|c:\\users\\sakum\\downloads\\appiumspecflowproject1 (3)\\appiumspecflowproject1\\appiumspecflowproject1\\pages\\clickpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|solutionrelative:appiumspecflowproject1\\pages\\clickpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|c:\\users\\sakum\\downloads\\appiumspecflowproject1 (3)\\appiumspecflowproject1\\appiumspecflowproject1\\hooks\\specinitialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|solutionrelative:appiumspecflowproject1\\hooks\\specinitialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|c:\\users\\sakum\\downloads\\appiumspecflowproject1 (3)\\appiumspecflowproject1\\appiumspecflowproject1\\hooks\\testinitialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F02FCD8-AE62-4912-8D9D-27636F9AD8DE}|AppiumSpecFlowProject1\\AppiumSpecFlowProject1.csproj|solutionrelative:appiumspecflowproject1\\hooks\\testinitialize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 7,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Tap.cs",
+              "DocumentMoniker": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\Tap.cs",
+              "RelativeDocumentMoniker": "AppiumSpecFlowProject1\\Pages\\Tap.cs",
+              "ToolTip": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\Tap.cs",
+              "RelativeToolTip": "AppiumSpecFlowProject1\\Pages\\Tap.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:27:53.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\Login.cs",
+              "RelativeDocumentMoniker": "AppiumSpecFlowProject1\\Pages\\Login.cs",
+              "ToolTip": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\Login.cs",
+              "RelativeToolTip": "AppiumSpecFlowProject1\\Pages\\Login.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:27:51.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ClickPage.cs",
+              "DocumentMoniker": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\ClickPage.cs",
+              "RelativeDocumentMoniker": "AppiumSpecFlowProject1\\Pages\\ClickPage.cs",
+              "ToolTip": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Pages\\ClickPage.cs",
+              "RelativeToolTip": "AppiumSpecFlowProject1\\Pages\\ClickPage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:27:49.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TestInitialize.cs",
+              "DocumentMoniker": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Hooks\\TestInitialize.cs",
+              "RelativeDocumentMoniker": "AppiumSpecFlowProject1\\Hooks\\TestInitialize.cs",
+              "ToolTip": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Hooks\\TestInitialize.cs",
+              "RelativeToolTip": "AppiumSpecFlowProject1\\Hooks\\TestInitialize.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:27:46.222Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "specInitialize.cs",
+              "DocumentMoniker": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Hooks\\specInitialize.cs",
+              "RelativeDocumentMoniker": "AppiumSpecFlowProject1\\Hooks\\specInitialize.cs",
+              "ToolTip": "C:\\Users\\sakum\\Downloads\\AppiumSpecFlowProject1 (3)\\AppiumSpecFlowProject1\\AppiumSpecFlowProject1\\Hooks\\specInitialize.cs",
+              "RelativeToolTip": "AppiumSpecFlowProject1\\Hooks\\specInitialize.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T09:25:19.192Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 393,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
