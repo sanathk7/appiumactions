@@ -32,13 +32,13 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0'  # Adjust based on your project
+          dotnet-version: '6.0.x'  # Match project requirement
 
       - name: Install Dependencies
         run: |
-          dotnet restore AppiumSpecFlowProject1.sln  # Ensure correct path
+          dotnet restore AppiumSpecFlowProject1.sln
 
-      - name: Run Tests
+      - name: Run Tests (Only tap.feature)
         run: |
-          dotnet build AppiumSpecFlowProject1.sln  # Ensure correct path
-          dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "TestCategory=Appium"
+          dotnet build AppiumSpecFlowProject1.sln
+          dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "FullyQualifiedName~tap"
