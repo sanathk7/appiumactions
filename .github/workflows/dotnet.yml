@@ -1,5 +1,3 @@
-name: Appium SpecFlow Tests
-
 on:
   push:
     branches:
@@ -36,42 +34,24 @@ jobs:
           npm install -g appium
           appium -v
 
-      - name: Install Android SDK and Emulator
+      - name: Set up Android SDK
         run: |
-          sudo apt-get update
-          sudo apt-get install -y unzip wget curl openjdk-17-jdk
+          export ANDROID_HOME=$HOME/android-sdk
           mkdir -p $ANDROID_HOME/cmdline-tools
-          cd $ANDROID_HOME/cmdline-tools
-          wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip
-          mv cmdline-tools latest
+          curl -O https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          unzip commandlinetools-linux-11076708_latest.zip -d $ANDROID_HOME/cmdline-tools
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-          chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/*
-          echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH" >> ~/.bashrc
-          echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> ~/.bashrc
-          source ~/.bashrc
-          java -version
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platform-tools" "emulator" "system-images;android-30;google_apis;x86_64"
+          yes | sdkmanager --licenses
+          sdkmanager "system-images;android-30;google_apis;x86_64"
+          sdkmanager --install "platform-tools" "platforms;android-30" "emulator"
 
-      - name: Verify Installation Paths
+      - name: Start Android Emulator (Headless Mode)
         run: |
-          echo "Checking Installed Tools..."
-          ls -l $ANDROID_HOME/cmdline-tools/latest/bin
-          echo "Verifying sdkmanager..."
-          which sdkmanager || echo "sdkmanager not found"
-          echo "Verifying avdmanager..."
-          which avdmanager || echo "avdmanager not found"
-
-      - name: Create AVD (Non-Interactive)
-        run: |
-          echo "Creating AVD..."
-          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4"
-
-      - name: Start Android Emulator (Headless)
-        run: |
-          echo "Starting Emulator in Headless Mode..."
-          $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
+          export ANDROID_HOME=$HOME/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4"
+          $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
           adb wait-for-device
           adb devices
 
@@ -90,3 +70,4 @@ jobs:
         run: |
           dotnet build AppiumSpecFlowProject1.sln
           dotnet test --filter "FullyQualifiedName~AppiumSpecFlowProject1.Features.TapFeature"
+
