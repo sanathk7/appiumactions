@@ -39,29 +39,38 @@ jobs:
       - name: Install Android SDK and Emulator
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip curl
-          
-          # Install SDK Command-line tools
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          cd $ANDROID_HOME/cmdline-tools
-          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
-          unzip commandlinetools.zip -d latest
-          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
-
-          # Accept SDK licenses
+          sudo apt-get install -y android-sdk
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest
+          cd $ANDROID_HOME/cmdline-tools/latest
+          curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip sdk-tools.zip -d $ANDROID_HOME/cmdline-tools/latest
+          chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/*
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
           yes | sdkmanager --licenses
-
-          # Install necessary SDK packages
           sdkmanager --install "platform-tools" "platforms;android-30" "emulator" "system-images;android-30;default;x86_64"
 
-          # Create and configure AVD
-          avdmanager create avd -n testEmulator -k "system-images;android-30;default;x86_64"
+      - name: Create Android Emulator
+        run: |
+          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
+          echo "Checking available AVD devices..."
+          $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager list device
+          echo "Creating AVD..."
+          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testEmulator -k "system-images;android-30;default;x86_64" --force
+          echo "Verifying AVD..."
+          $ANDROID_HOME/emulator/emulator -list-avds
 
       - name: Start Android Emulator (Headless Mode)
         run: |
-          $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
-          timeout 600 sh -c 'until adb shell getprop sys.boot_completed | grep -m 1 "1"; do sleep 5; done'
-          adb devices
+          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
+          if [[ -f "$HOME/.android/avd/testEmulator.ini" ]]; then
+            echo "Starting Emulator..."
+            $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
+            timeout 600 sh -c 'until adb shell getprop sys.boot_completed | grep -m 1 "1"; do sleep 5; done'
+            adb devices
+          else
+            echo "Error: AVD 'testEmulator' does not exist!"
+            exit 1
+          fi
 
       - name: Verify Appium Server Status
         run: curl http://localhost:4723/status || echo "Appium server is not running"
