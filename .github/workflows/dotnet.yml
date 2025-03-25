@@ -41,4 +41,5 @@ jobs:
       - name: Run Tests (Only tap.feature)
         run: |
           dotnet build AppiumSpecFlowProject1.sln
-          dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "FullyQualifiedName~tap"
+          dotnet test --filter "FullyQualifiedName~AppiumSpecFlowProject1.Features.TapFeature"
+
