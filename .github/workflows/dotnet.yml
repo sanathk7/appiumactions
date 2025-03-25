@@ -26,6 +26,19 @@ jobs:
       - name: Debug File Structure
         run: ls -R
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Use a stable Node.js version
+
+      - name: Install Appium
+        run: |
+          npm install -g appium
+          appium -v
+
+      - name: Verify Appium Server Status
+        run: curl http://localhost:4723/status || echo "Appium server is not running"
+
       - name: Install libssl
         run: sudo apt-get update && sudo apt-get install -y libssl-dev
 
@@ -35,11 +48,9 @@ jobs:
           dotnet-version: '6.0.x'  # Match project requirement
 
       - name: Install Dependencies
-        run: |
-          dotnet restore AppiumSpecFlowProject1.sln
+        run: dotnet restore AppiumSpecFlowProject1.sln
 
       - name: Run Tests (Only tap.feature)
         run: |
           dotnet build AppiumSpecFlowProject1.sln
-          dotnet test --filter "FullyQualifiedName~AppiumSpecFlowProject1.Features.TapFeature"
-
+          dotnet test AppiumSpecFlowProject1/AppiumSpecFlowProject1.csproj --filter "FullyQualifiedName~tap"
