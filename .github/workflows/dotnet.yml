@@ -29,23 +29,35 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use a stable Node.js version
+          node-version: '18'
 
       - name: Install Appium
         run: |
           npm install -g appium
           appium -v
 
+      - name: Install Android SDK and Emulator
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y android-sdk
+          yes | sdkmanager --licenses
+          sdkmanager "system-images;android-30;google_apis;x86_64"
+          sdkmanager --install "platform-tools" "platforms;android-30" "emulator"
+          avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64"
+
+      - name: Start Android Emulator
+        run: |
+          $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
+          adb wait-for-device
+          adb devices
+
       - name: Verify Appium Server Status
         run: curl http://localhost:4723/status || echo "Appium server is not running"
-
-      - name: Install libssl
-        run: sudo apt-get update && sudo apt-get install -y libssl-dev
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'  # Match project requirement
+          dotnet-version: '6.0.x'
 
       - name: Install Dependencies
         run: dotnet restore AppiumSpecFlowProject1.sln
