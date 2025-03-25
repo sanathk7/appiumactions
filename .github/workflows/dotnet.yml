@@ -48,10 +48,15 @@ jobs:
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
           yes | sdkmanager --licenses
           sdkmanager --install "platform-tools" "emulator" "system-images;android-30;google_apis;x86_64"
-          avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64"
+
+      - name: Create AVD (Non-Interactive)
+        run: |
+          echo "Creating AVD..."
+          echo "no" | avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4"
 
       - name: Start Android Emulator (Headless)
         run: |
+          echo "Starting Emulator in Headless Mode..."
           $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
           adb wait-for-device
           adb devices
