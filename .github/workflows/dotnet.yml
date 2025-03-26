@@ -36,43 +36,49 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          distribution: 'temurin'  # Alternative: 'zulu' or 'adopt'
+          distribution: 'temurin'
           java-version: '11'
 
       - name: Verify Java Installation
         run: java -version
 
-      - name: Set Environment Variables
+      - name: Set Android Environment Variables
         run: |
-          export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-          export ANDROID_HOME=$HOME/Android/Sdk
-          export ANDROID_AVD_HOME=$HOME/.android/avd
-          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$PATH
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> $GITHUB_ENV
-          echo "PATH=$PATH" >> $GITHUB_ENV
+          echo "Setting up Android environment variables"
+          echo "ANDROID_SDK_ROOT=$HOME/Android/Sdk" >> $GITHUB_ENV
+          echo "ANDROID_HOME=$HOME/Android/Sdk" >> $GITHUB_ENV
+          echo "ANDROID_AVD_HOME=$HOME/.android/avd" >> $GITHUB_ENV
+          echo "PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator" >> $GITHUB_ENV
 
       - name: Install Android SDK and Emulator
         run: |
           sudo apt-get update
           sudo apt-get install -y wget unzip
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          
+          # Download Android SDK command-line tools
           mkdir -p $ANDROID_HOME/cmdline-tools
-          unzip commandlinetools-linux-9477386_latest.zip -d $ANDROID_HOME/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip -q commandlinetools-linux-9477386_latest.zip -d $ANDROID_HOME/cmdline-tools
           mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
+          
+          # Add SDK tools to PATH
+          echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH" >> ~/.bashrc
+          source ~/.bashrc
 
-      - name: Validate System Image Installation
+          # Accept SDK licenses
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+
+          # Install required Android components
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
+
+      - name: Verify System Image Installation
         run: |
-          sdkmanager --list | grep "system-images;android-30;google_apis;x86_64" || echo "System image not found!"
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --list | grep "system-images;android-30;google_apis;x86_64" || echo "System image not found!"
 
       - name: Create Android Emulator
         run: |
-          echo "y" | avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4" --force
-          avdmanager list avd
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4" --force
+          $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager list avd
           ls -al $ANDROID_AVD_HOME
 
       - name: Start Android Emulator
