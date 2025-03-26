@@ -33,13 +33,25 @@ jobs:
           npm install -g appium
           appium -v
 
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'temurin'  # Alternative: 'zulu' or 'adopt'
+          java-version: '11'
+
+      - name: Verify Java Installation
+        run: java -version
+
       - name: Set Environment Variables
         run: |
-          export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
-          export ANDROID_HOME=$HOME/Library/Android/sdk
+          export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+          export ANDROID_HOME=$HOME/Android/Sdk
           export ANDROID_AVD_HOME=$HOME/.android/avd
-          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
-          export JAVA_HOME=$(/usr/libexec/java_home)
+          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$PATH
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> $GITHUB_ENV
+          echo "PATH=$PATH" >> $GITHUB_ENV
 
       - name: Install Android SDK and Emulator
         run: |
@@ -52,13 +64,22 @@ jobs:
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4" --force
+
+      - name: Validate System Image Installation
+        run: |
+          sdkmanager --list | grep "system-images;android-30;google_apis;x86_64" || echo "System image not found!"
+
+      - name: Create Android Emulator
+        run: |
+          echo "y" | avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --device "pixel_4" --force
+          avdmanager list avd
+          ls -al $ANDROID_AVD_HOME
 
       - name: Start Android Emulator
         run: |
           export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH
           nohup $ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect &
-          sleep 60
+          sleep 90
           adb wait-for-device
           adb devices
 
