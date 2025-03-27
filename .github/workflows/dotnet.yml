@@ -2,11 +2,12 @@ name: Appium SpecFlow Tests
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
+  #   branches:
+  #     - master
+  # pull_request:
+  #   branches:
+  #     - master
 
 jobs:
   test:
